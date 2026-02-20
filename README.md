@@ -1,75 +1,87 @@
-# React + TypeScript + Vite
+Project Plan — ThemeStudio (implementation phase)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Goal
+- Deliver a maintainable Theme Studio web app with a clean architecture that supports: theme editing, token management, export (VSCode theme / JSON), and future persistence.
 
-Currently, two official plugins are available:
+High-level approach
+- Use a layered clean architecture: `core` (domain & utilities), `features` (business features), `adapters` (external APIs/files), `ui` (presentational components), and `hooks` (shared React hooks).
+- Keep small, well-scoped modules with clear interfaces and unit tests.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Folder layout (recommended)
+- src/
+  - core/                # domain models, types, errors, config, logger
+  - features/
+    - editor/            # theme editing logic, domain services, models
+    - exporter/          # export to VSCode, JSON, and clipboard
+  - adapters/
+    - storage/           # file system / cloud adapters (placeholder)
+    - serializers/       # convert domain -> VSCode JSON
+  - ui/
+    - components/        # shared UI components (Button, Modal, Form)
+    - layout/            # App shell, Sidebar, Toolbar
+    - theme/             # theme preview renderer
+  - hooks/               # reusable React hooks
+  - styles/              # tailwind.config.js, global css, tokens
+  - tests/               # vitest unit tests
 
-## React Compiler
+Phased tasks (milestones)
+1) Project scaffolding (1 day)
+   - Create folders above, add `tailwind.config.js`, `src/core/*` skeletons.
+   - Add `tailwind` and small tokens structure in `styles/tokens.ts`.
+   - Ensure Vite builds and dev server runs.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+2) Core & domain (1-2 days)
+   - Implement `Theme` domain model and validation utilities.
+   - Add lightweight `Logger` and `Config` in `core/`.
 
-Note: This will impact Vite dev & build performances.
+3) Editor feature (2-4 days)
+   - Implement `features/editor` with business services: applyToken, revert, preview state.
+   - Build `ui/layout/Sidebar` and `ui/theme/Preview` components.
 
-## Expanding the ESLint configuration
+4) Exporter feature (1-2 days)
+   - Implement `features/exporter` and `adapters/serializers` to output VSCode theme JSON and copy-to-clipboard.
+   - Add UI actions (Export button, download link).
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+5) Polishing & tests (2 days)
+   - Add unit tests (Vitest) for core & services.
+   - Add ESLint rules and Prettier config (formatting).
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+6) CI & docs (1 day)
+   - Add GitHub Actions: lint, test, build.
+   - Update README with dev/run instructions and architecture notes.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Developer Experience (DX)
+- Scripts: keep `npm run dev`, `build`, `lint`, `test`.
+- Add `CONTRIBUTING.md` with branch and commit conventions.
+- Keep components small, prefer props over context for composability.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Testing strategy
+- Unit tests for `core` and `features` logic using Vitest.
+- Simple integration tests verifying the editor -> preview -> export flow.
+- Add a single E2E smoke test later (Playwright) if needed.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Interfaces & boundaries
+- Define simple interfaces for adapters (StorageAdapter, Serializer) in `core/interfaces.ts`.
+- Features call domain services, not directly DOM or adapters — adapters are injected.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Immediate next steps I will start now
+- Create the scaffold folders and add `tailwind.config.js` and `styles/tokens.ts` (if you want me to implement these, confirm and I will proceed).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Acceptance criteria for initial milestone
+- Project builds and `npm run dev` serves the app.
+- `src/core/Theme.ts` model exists with basic validation and tests.
+- Sidebar and a minimal preview component render sample tokens.
+
+Questions / clarifications (pick up to 3)
+- Do you want to support exporting multiple editor themes or just one at first?
+- Should persistence be local-only (download/file) for v1, or include cloud storage later?
+- Preferred test runner: Vitest (fast + Vite-friendly) or Jest?
+
+Estimated timeline (conservative)
+- Scaffold + core: 3 business days
+- Editor + preview: 3-5 business days
+- Exporter + tests + CI: 3 business days
+- Total: ~2–3 weeks (single developer, part-time) depending on scope changes
+
+--
+Plan authored for iteration; tell me if you want me to begin scaffold implementation now.
