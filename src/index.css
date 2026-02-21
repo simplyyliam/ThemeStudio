@@ -1,1 +1,9 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+
+.box1 {
+    background: var(--background);
+}
+.box2 {
+    background: var(--foreground);
+}
