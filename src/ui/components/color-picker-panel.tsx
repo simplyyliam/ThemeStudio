@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { useThemeModal } from "../../core";
 import { type ThemeColors } from "../../core/store/theme-store/theme-modal";
+import { useThemeModal } from "../../core";
 
 interface ColorPickerProps {
   token: string | null;
@@ -8,7 +8,9 @@ interface ColorPickerProps {
 }
 export default function ColorPickerPanel({ token, onClose }: ColorPickerProps) {
   
-  const { updateColor, udpateToken, theme } = useThemeModal()
+  const theme = useThemeModal((s) => s.theme)
+  const updateColor = useThemeModal((s) => s.updateColor)
+  const updateToken = useThemeModal((s) => s.updateToken)
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if(!token) return
@@ -16,13 +18,12 @@ export default function ColorPickerPanel({ token, onClose }: ColorPickerProps) {
     const colorValue = e.target.value
     
     //Live preview
-    document.documentElement.style.setProperty(`--${token}`, colorValue)
+    // document.documentElement.style.setProperty(`--${token}`, colorValue)
 
     const colorKey = Object.keys(theme.colors) as (keyof ThemeColors)[]
     const matched = colorKey.find((key) => 
       token === String(key) || token.endsWith(`-${key}`) 
   )
-
   // const stringKey = colorKey.find(k => String(k))
   // console.log("Token:", token)
   // console.log("String(Key):", stringKey)
@@ -31,12 +32,10 @@ export default function ColorPickerPanel({ token, onClose }: ColorPickerProps) {
     if(matched) {
       updateColor(matched, colorValue)
     } else {
-      udpateToken(token, colorValue)
+      updateToken(token, colorValue)
     }
     
-    
-    if(!token) return null
-  }, [theme, updateColor, udpateToken, token])
+  }, [theme, updateColor, updateToken, token])
 
 
   const themeJson = JSON.stringify(useThemeModal.getState().theme, null, 2)
