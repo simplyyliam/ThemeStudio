@@ -26,20 +26,20 @@ export const useThemeModal = create<ThemeStore>()(
           tabsBg: "#020617",
 
           // Text
-          foreground: "",
-          subtleForeground: "",
+          foreground: "#e5e7eb",
+          subtleForeground: "#94a3b8",
 
           // Structure
-          border: "",
-          focusBorder: "",
+          border: "#1e293b",
+          focusBorder: "#3b82f6",
 
           // Interaction
-          selection: "",
-          hover: "",
-          lineHighlight: "",
+          selection: "#1e293b",
+          hover: "#0f172a",
+          lineHighlight: "#020617",
 
           // Accent
-          accent: ""
+          accent: "#38bdf8"
 
         },
         tokenColors: [],

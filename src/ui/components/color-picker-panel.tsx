@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { type ThemeColors } from "../../core/store/theme-store/theme-modal";
-import { useThemeModal } from "../../core";
+import { GenerateThemeJson, useThemeModal} from "../../core";
 
 interface ColorPickerProps {
   token: string | null;
@@ -38,9 +38,11 @@ export default function ColorPickerPanel({ token, onClose }: ColorPickerProps) {
   }, [theme, updateColor, updateToken, token])
 
 
-  const themeJson = JSON.stringify(useThemeModal.getState().theme, null, 2)
+  const themeJson = JSON.stringify(GenerateThemeJson(theme), null, 2)
+  // const themePreviewJson = JSON.stringify(useThemeModal.getState(), null, 2)
 
   console.log("Theme JSON:", themeJson)
+  // console.log("Theme Preview JSON:", themePreviewJson)
   
   return (
     <div className="fixed flex gap-2 items-center justify-center bottom-5 bg-neutral-200 p-2.5 rounded-xl">

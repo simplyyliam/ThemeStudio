@@ -25,7 +25,7 @@ export default function App() {
   }
   return (
     <div onClick={handleCLick} className="flex flex-col items-center justify-center w-screen h-screen">
-      <Box  tokenName="background"/>
+      <Box  tokenName="editorBg"/>
       <Box  tokenName="foreground"/>
       <ColorPickerPanel 
         token={activeToken}
