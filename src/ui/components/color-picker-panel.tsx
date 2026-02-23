@@ -40,9 +40,6 @@ export default function ColorPickerPanel({ token, onClose }: ColorPickerProps) {
 
   const themeJson = JSON.stringify(useThemeModal.getState().theme, null, 2)
 
-  console.log("background:", theme.colors.background)
-  console.log("foreground:", theme.colors.foreground)
-
   console.log("Theme JSON:", themeJson)
   
   return (

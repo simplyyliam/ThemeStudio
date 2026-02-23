@@ -3,15 +3,32 @@ Interface scheme of the ThemeColors (NOT syntax)
 - The structural UI color system of VS Code.
 */
 export interface ThemeColors {
-    background: string
-    foreground: string
-    sidebar: string
-    activityBar: string
-    statusBar: string
-    titleBar: string
-    panel: string
-    border: string
+  // Core surfaces
+  editorBg: string
+  sidebarBg: string
+  activityBarBg: string
+  panelBg: string
+  statusBarBg: string
+  titleBarBg: string
+  tabsBg: string
+
+  // Text
+  foreground: string
+  subtleForeground: string
+
+  // Structure
+  border: string
+  focusBorder: string
+
+  // Interaction
+  selection: string
+  hover: string
+  lineHighlight: string
+
+  // Accent
+  accent: string
 }
+
 
 /*
 Interface scheme of the TokenColor 

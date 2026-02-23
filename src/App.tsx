@@ -27,7 +27,6 @@ export default function App() {
     <div onClick={handleCLick} className="flex flex-col items-center justify-center w-screen h-screen">
       <Box  tokenName="background"/>
       <Box  tokenName="foreground"/>
-      <h1 data-token="text-color">This is a token</h1>
       <ColorPickerPanel 
         token={activeToken}
         onClose={() => setActiveToken(null)}
