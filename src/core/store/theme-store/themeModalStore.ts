@@ -16,14 +16,31 @@ export const useThemeModal = create<ThemeStore>()(
         name: "ThemeStudio",
         type: "dark",
         colors: {
-          background: "#020617",
-          foreground: "#e5e7eb",
-          sidebar: "#020617",
-          activityBar: "#020617",
-          statusBar: "#020617",
-          titleBar: "#020617",
-          panel: "#020617",
-          border: "#1e293b",
+          //core surface
+          editorBg: "#020617",
+          sidebarBg: "#e5e7eb",
+          activityBarBg: "#020617",
+          panelBg: "#020617",
+          statusBarBg: "#020617",
+          titleBarBg: "#020617",
+          tabsBg: "#020617",
+
+          // Text
+          foreground: "",
+          subtleForeground: "",
+
+          // Structure
+          border: "",
+          focusBorder: "",
+
+          // Interaction
+          selection: "",
+          hover: "",
+          lineHighlight: "",
+
+          // Accent
+          accent: ""
+
         },
         tokenColors: [],
       },
@@ -41,9 +58,9 @@ export const useThemeModal = create<ThemeStore>()(
             tokenColors: state.theme.tokenColors.map((token) =>
               token.scope === scope
                 ? {
-                    ...token,
-                    settings: { ...token.settings, foreground: value },
-                  }
+                  ...token,
+                  settings: { ...token.settings, foreground: value },
+                }
                 : token
             ),
           },
