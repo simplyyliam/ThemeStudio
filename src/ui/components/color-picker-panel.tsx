@@ -1,58 +1,49 @@
 import { useCallback } from "react";
 import { type ThemeColors } from "../../core/store/theme-store/theme-modal";
-import { GenerateThemeJson, useThemeModal} from "../../core";
+import { GenerateThemeJson, useThemeModal } from "../../core";
 
 interface ColorPickerProps {
   token: string | null;
   onClose: () => void;
 }
 export default function ColorPickerPanel({ token, onClose }: ColorPickerProps) {
-  
-  const theme = useThemeModal((s) => s.theme)
-  const updateColor = useThemeModal((s) => s.updateColor)
-  const updateToken = useThemeModal((s) => s.updateToken)
+  const theme = useThemeModal((s) => s.theme);
+  const updateColor = useThemeModal((s) => s.updateColor);
+  const updateToken = useThemeModal((s) => s.updateToken);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if(!token) return
-    //Stores the color value on input type="color"
-    const colorValue = e.target.value
-    
-    //Live preview
-    // document.documentElement.style.setProperty(`--${token}`, colorValue)
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (!token) return;
+      //Stores the color value on input type="color"
+      const colorValue = e.target.value;
 
-    const colorKey = Object.keys(theme.colors) as (keyof ThemeColors)[]
-    const matched = colorKey.find((key) => 
-      token === String(key) || token.endsWith(`-${key}`) 
-  )
-  // const stringKey = colorKey.find(k => String(k))
-  // console.log("Token:", token)
-  // console.log("String(Key):", stringKey)
-  // console.log("Matched:", matched)
+      const colorKey = Object.keys(theme.colors) as (keyof ThemeColors)[];
+      const matched = colorKey.find(
+        (key) => token === String(key) || token.endsWith(`-${key}`),
+      );
+      // const stringKey = colorKey.find(k => String(k))
+      // console.log("Token:", token)
+      // console.log("String(Key):", stringKey)
+      // console.log("Matched:", matched)
 
-    if(matched) {
-      updateColor(matched, colorValue)
-    } else {
-      updateToken(token, colorValue)
-    }
-    
-  }, [theme, updateColor, updateToken, token])
+      if (matched) {
+        updateColor(matched, colorValue);
+      } else {
+        updateToken(token, colorValue);
+      }
+    },
+    [theme, updateColor, updateToken, token],
+  );
 
+  const themeJson = JSON.stringify(GenerateThemeJson(theme), null, 2);
+  console.log("Theme JSON:", themeJson);
 
-  const themeJson = JSON.stringify(GenerateThemeJson(theme), null, 2)
-  // const themePreviewJson = JSON.stringify(useThemeModal.getState(), null, 2)
-
-  console.log("Theme JSON:", themeJson)
-  // console.log("Theme Preview JSON:", themePreviewJson)
-  
   return (
     <div className="fixed flex gap-2 items-center justify-center bottom-5 bg-neutral-200 p-2.5 rounded-xl">
       <h3 className="text-sm opacity-70">Editing</h3>
       <div className="font-mono">{token}</div>
 
-      <input
-        type="color"
-        onChange={handleChange}
-      />
+      <input type="color" onChange={handleChange} />
 
       <button onClick={onClose}>Close</button>
     </div>
