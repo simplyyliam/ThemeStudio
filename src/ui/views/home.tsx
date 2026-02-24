@@ -1,6 +1,6 @@
 
 export default function Home() {
     return (
-        <div className="flex items-center justify-center w-full h-full">hello home</div>
+        <div className="flex w-full h-full">hello home</div>
     )
 }
