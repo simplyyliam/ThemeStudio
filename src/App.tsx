@@ -1,5 +1,6 @@
 import { RouterProvider } from "react-router-dom";
 import { Router } from "./router";
+import { TooltipProvider } from "./components/ui/tooltip";
 
 export default function App() {
   //Stores the selected totken from handleColorPicker
@@ -22,6 +23,8 @@ export default function App() {
   //   setActiveToken(token);
   // };
   return (
-    <RouterProvider router={Router}/>
+    <TooltipProvider>
+      <RouterProvider router={Router} />
+    </TooltipProvider>
   );
 }
