@@ -1,2 +1,4 @@
-export { default as Box } from "./box";
+
 export { default as ColorPickerPanel} from "./color-picker-panel";
+export { Favcon } from "./sidebar/favcon";
+export { SidebarUser } from "./sidebar/sidebar-user";
