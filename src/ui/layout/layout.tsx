@@ -12,7 +12,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { Favcon, SidebarUser } from "../components";
 import { SidebarItems } from "@/lib/sidebar-nav-items";
 
@@ -34,7 +34,9 @@ export default function Layout() {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     {item.children.map((child) => (
-                      <SidebarMenuButton>{child}</SidebarMenuButton>
+                      <Link to={child.link}>
+                        <SidebarMenuButton>{child.label}</SidebarMenuButton>
+                      </Link>
                     ))}
                   </SidebarMenuItem>
                 </SidebarMenu>

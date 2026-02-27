@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./ui/layout/layout";
 import Editor from "./ui/views/editor";
-import Settings from "./ui/views/settings";
+import { History } from "./ui";
+
+
 
 export const Router = createBrowserRouter([
   {
@@ -12,8 +14,12 @@ export const Router = createBrowserRouter([
         element: <Editor />,
       },
       {
-        path: "/settings",
-        element: <Settings />,
+        path: "/theme",
+        element: <Editor/>,
+      },
+      {
+        path: "/history",
+        element: <History/>,
       },
     ],
   },
