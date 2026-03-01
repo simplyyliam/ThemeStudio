@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from "./ui/layout/layout";
-import Editor from "./ui/views/editor";
-import { History } from "./ui";
+import { History, Home } from "./ui";
 
 
 
@@ -11,11 +10,11 @@ export const Router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Editor />,
+        element: <Home />,
       },
       {
         path: "/theme",
-        element: <Editor/>,
+        element: <Home />,
       },
       {
         path: "/history",
